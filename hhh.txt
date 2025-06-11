@@ -1,0 +1,124 @@
+'use client';
+
+import React, { useState } from 'react';
+
+const TaskScheduler = ({ dayName }) => {
+  const [tasks, setTasks] = useState([]);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [newTask, setNewTask] = useState({
+    name: '',
+    startTime: '09:00',
+    endTime: '10:00',
+    color: '#e74c3c' // red for occupied
+  });
+
+  const parseTime = (str) => {
+    const [h, m] = str.split(':').map(Number);
+    return h * 60 + m;
+  };
+
+  const getLeftPercent = (time) => {
+    const totalMinutes = 14 * 60; // 9:00 to 23:00
+    const startMinutes = 9 * 60;
+    const current = parseTime(time);
+    return ((current - startMinutes) / totalMinutes) * 100;
+  };
+
+  const getWidthPercent = (start, end) => {
+    return ((parseTime(end) - parseTime(start)) / (14 * 60)) * 100;
+  };
+
+  const addTask = () => {
+    if (parseTime(newTask.startTime) >= parseTime(newTask.endTime)) {
+      alert("End time must be after start time");
+      return;
+    }
+
+    setTasks([
+      ...tasks,
+      {
+        ...newTask,
+        color: '#e74c3c' // red for all occupied time
+      }
+    ]);
+    setModalOpen(false);
+  };
+
+  return (
+    <div style={{ padding: '1rem', fontFamily: 'sans-serif' }}>
+      <h3>{dayName}</h3>
+
+      {/* Background Green Bar */}
+      <div style={{
+        position: 'relative',
+        height: '40px',
+        backgroundColor: '#2ecc71',
+        borderRadius: '10px',
+        overflow: 'hidden',
+        marginBottom: '1rem'
+      }}>
+        {/* Overlay Red Bars */}
+        {tasks.map((task, idx) => (
+          <div
+            key={idx}
+            title={task.name}
+            style={{
+              position: 'absolute',
+              top: 0,
+              height: '100%',
+              backgroundColor: task.color,
+              left: `${getLeftPercent(task.startTime)}%`,
+              width: `${getWidthPercent(task.startTime, task.endTime)}%`,
+              borderRadius: '10px'
+            }}
+          />
+        ))}
+      </div>
+
+      <button onClick={() => setModalOpen(true)} style={{ padding: '6px 12px' }}>
+        + Add Task
+      </button>
+
+      {/* Modal for Adding Tasks */}
+      {modalOpen && (
+        <div style={{
+          position: 'fixed', top: '20%', left: '50%', transform: 'translateX(-50%)',
+          backgroundColor: '#fff', padding: '1rem', borderRadius: '10px', boxShadow: '0 2px 10px rgba(0,0,0,0.3)', zIndex: 1000
+        }}>
+          <h4>Add New Task</h4>
+          <input
+            type="text"
+            placeholder="Task Name"
+            value={newTask.name}
+            onChange={(e) => setNewTask({ ...newTask, name: e.target.value })}
+            style={{ width: '100%', marginBottom: '0.5rem' }}
+          />
+          <div style={{ marginBottom: '0.5rem' }}>
+            <label>Start Time: </label>
+            <input
+              type="time"
+              value={newTask.startTime}
+              onChange={(e) => setNewTask({ ...newTask, startTime: e.target.value })}
+            />
+            <br />
+            <label>End Time: </label>
+            <input
+              type="time"
+              value={newTask.endTime}
+              onChange={(e) => setNewTask({ ...newTask, endTime: e.target.value })}
+            />
+          </div>
+
+          <div style={{ display: 'flex', gap: '5px', marginBottom: '0.5rem' }}>
+            <span style={{ fontSize: '0.9rem' }}>Color is fixed to red for occupied time.</span>
+          </div>
+
+          <button onClick={addTask}>Save Task</button>
+          <button onClick={() => setModalOpen(false)} style={{ marginLeft: '10px' }}>Cancel</button>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default TaskScheduler;
