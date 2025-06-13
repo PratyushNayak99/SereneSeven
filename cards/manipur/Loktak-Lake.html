@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Loktak Lake</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Arial", sans-serif;
+        background: #000;
+        color: #fff;
+        overflow-x: hidden;
+        min-height: 100vh;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .portfolio-card {
+        background: linear-gradient(
+          135deg,
+          rgba(20, 20, 20, 0.9),
+          rgba(40, 40, 40, 0.8)
+        );
+        border-radius: 20px;
+        padding: 0;
+        width: 100%;
+        max-width: 1000px;
+        height: 600px;
+        display: flex;
+        position: relative;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        overflow: hidden;
+      }
+
+      .nav-top {
+        position: absolute;
+        top: 25px;
+        left: 25px;
+        right: 25px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 10;
+      }
+
+      .logo {
+        font-size: 14px;
+        font-weight: 500;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 30px;
+      }
+
+      .nav-links a {
+        color: #fff;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 300;
+        letter-spacing: 0.5px;
+        transition: opacity 0.3s ease;
+      }
+
+      .nav-links a:hover {
+        opacity: 0.7;
+      }
+
+      .image-section {
+        flex: 1;
+        position: relative;
+        background-size: 400% 400%;
+        border-radius: 20px 0 0 20px;
+        overflow: hidden;
+      }
+
+      .motion-blur {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: url(../../assets/cards/manipur/loktak-lake.jpg) center/cover;
+      }
+
+      .content-section {
+        flex: 1;
+        padding: 80px 50px 50px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        position: relative;
+      }
+
+      .name {
+        font-size: 4.5rem;
+        font-weight: 900;
+        line-height: 0.85;
+        margin-bottom: 20px;
+        letter-spacing: -2px;
+      }
+
+      .description {
+        font-size: 1.1rem;
+        font-weight: 300;
+        color: #ccc;
+        margin-bottom: 80px;
+        letter-spacing: 0.5px;
+        line-height: 1.4;
+      }
+
+      .scroll-indicator {
+        position: absolute;
+        bottom: 40px;
+        left: 50px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .portfolio-card:hover .motion-blur {
+        animation-duration: 3s;
+      }
+
+      .portfolio-card:hover .image-section {
+        animation-duration: 4s;
+      }
+
+      .content-section {
+        animation: fadeInUp 1s ease-out;
+      }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .image-section {
+        animation-delay: 0.3s;
+      }
+
+      .portfolio-card {
+        transition: transform 0.5s ease, box-shadow 0.5s ease;
+      }
+
+      .portfolio-card:hover {
+        transform: scale(1.015);
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
+      }
+
+      .motion-blur {
+        opacity: 0;
+        transform: scale(1.05);
+        animation: imageFadeIn 2s ease forwards;
+      }
+
+      @keyframes imageFadeIn {
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      .content-section {
+        animation: fadeInUp 1s ease-out;
+        opacity: 0;
+        animation-fill-mode: forwards;
+        animation-delay: 0.5s;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="portfolio-card">
+        <div class="nav-top">
+          <div class="logo">lOCATION</div>
+          <nav class="nav-links">
+            <a href="#works">HOME</a>
+            <a href="#about">GALLERY</a>
+          </nav>
+        </div>
+
+        <div class="image-section">
+          <div class="motion-blur"></div>
+        </div>
+
+        <div class="content-section">
+          <h1 class="name">Loktak Lake <br /></h1>
+          <p class="description">
+            Bishnupur district
+            <br />Loktak Lake, located in Bishnupur district of Manipur, is the
+            largest freshwater lake in Northeast India. Famous for its floating
+            islands called phumdis, it features the world’s only floating
+            national park, Keibul Lamjao, home to the endangered brow-antlered
+            deer or Sangai. The lake supports rich biodiversity and local
+            livelihoods.
+          </p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
