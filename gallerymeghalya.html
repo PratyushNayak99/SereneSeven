@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portfolio Grid</title>
+  <title>Meghalaya Gallery</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,200;1,200&display=swap');
@@ -21,6 +21,127 @@
       color: white;
       overflow-x: hidden;
     }
+    
+    section {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+    }
+    
+    /* Enhanced Home Section */
+    .home {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      background-image: linear-gradient(135deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.3)), url(assets/home/meghalya.png);
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .home::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.4) 100%);
+      z-index: 1;
+    }
+
+    .home-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      max-width: 800px;
+      padding: 0 20px;
+    }
+
+    .home-title {
+      font-size: 5rem;
+      font-weight: 900;
+      font-family: 'Outfit', sans-serif;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, #fff, #cceeff, #fff);
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: shimmer 3s ease-in-out infinite, fadeInUp 1.5s ease-out;
+      text-shadow: 0 0 50px rgba(204, 238, 255, 0.3);
+      position: relative;
+    }
+
+    .home-title::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 4px;
+      background: linear-gradient(90deg, transparent, #cceeff, transparent);
+      animation: expandLine 2s ease-out 0.5s both;
+    }
+
+    .home-subtitle {
+      font-size: 1.3rem;
+      color: rgba(204, 238, 255, 0.9);
+      font-family: 'Roboto Mono', monospace;
+      letter-spacing: 2px;
+      font-weight: 200;
+      animation: typewriter 3s steps(50) 1s both, fadeIn 0.5s ease-in 1s both;
+      overflow: hidden;
+      border-right: 2px solid #cceeff;
+      white-space: nowrap;
+      margin: 0 auto;
+      max-width: fit-content;
+    }
+
+    /* Animations */
+    @keyframes shimmer {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes typewriter {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+
+    @keyframes expandLine {
+      from {
+        width: 0;
+        opacity: 0;
+      }
+      to {
+        width: 100px;
+        opacity: 1;
+      }
+    }
+
     .header {
       position: fixed;
       top: 0;
@@ -34,6 +155,23 @@
       align-items: center;
       justify-content: center;
       z-index: 1000;
+    }
+
+    .header1 {
+      position: absolute;
+      top: 50px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      text-align: center;
+    }
+
+    .header1 h2 {
+      font-size: 3rem;
+      font-weight: 700;
+      font-family: 'Outfit', sans-serif;
+      color: white;
+      margin-bottom: 20px;
     }
 
     .scroll-container {
@@ -131,7 +269,7 @@
       font-size: 1.8rem;
       font-weight: bold;
       margin-bottom: 70px;
-      margin-left: 40px;
+      margin: auto;
       line-height: 1.2;
       font-family: Outfit, sans-serif;
       transition: letter-spacing 0.3s ease;
@@ -156,7 +294,6 @@
       font-size: 1rem;
       font-weight: bold;
     }
-
 
     .scroll-controls {
       position: fixed;
@@ -309,90 +446,126 @@
       transition: height 0.3s ease;
     }
 
-
-
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .home-title {
+        font-size: 3rem;
+      }
+      
+      .home-subtitle {
+        font-size: 1rem;
+      }
+      
+      .header1 h2 {
+        font-size: 2rem;
+      }
+      
+      .panel {
+        width: 200px;
+        height: 50vh;
+      }
+      
+      .panel .content h2 {
+        font-size: 1.4rem;
+      }
+    }
   </style>
 </head>
 <body>
-    <div class="header">
-    <h2>Gallery</h2>
-    </div>
-  <div class="scroll-container">
-    <div class="container auto-scrolling" id="container">
-      <div class="panel">
-        <img src="assets/gallery/meghalya/meghalya-1.jpg" alt="">
-        <div class="content">
-          <h2>Garden of Caves</h2>
-          <p><a href="cards.html">Read More→</a></p>
-        </div>
-        <div class="fade-bottom"></div>
+  <section>
+    <div class="home">
+      <div class="home-content">
+        <h1 class="home-title">MEGHALAYA</h1>
+        <p class="home-subtitle">Discover the pristine beauty of the Abode of Clouds</p>
       </div>
-      <div class="panel">
-        <img src="assets/gallery/meghalya/cherrapunji.jpg" alt="">
-        <div class="content">
-          <h2>Cherrapunji</h2>
-          <p><a href="cards.html">Read More→</a></p>
-        </div>
-        <div class="fade-bottom"></div>
-      </div>
-      <div class="panel">
-        <img src="assets/gallery/meghalya/meghalya-3.jpeg" alt="">
-        <div class="content">
-          <h2>Mawlynnong</h2>
-          <p><a href="cards.html">Read More→</a></p>
-        </div>
-        <div class="fade-bottom"></div>
-      </div>
-      <div class="panel">
-        <img src="assets/gallery/meghalya/meghalya-4.jpg" alt="">
-        <div class="content">
-          <h2>Balpakram National Park</h2>
-          <p><a href="cards.html">Read More→</a></p>
-        </div>
-        <div class="fade-bottom"></div>
-      </div>
-      <div class="panel">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Tawang_Gate.jpg/500px-Tawang_Gate.jpg" alt="">
-        <div class="content">
-          <h2>Sella Pass</h2>
-          <p><a href="cards.html">Read More→</a></p>
-        </div>
-        <div class="fade-bottom"></div>
-      </div>
-      <div class="panel">
-        <img src="https://images.unsplash.com/photo-1418065460487-3956ef138d69?w=400&h=600&fit=crop" alt="">
-        <div class="content">
-          <h2>ASSAM 6</h2>
-          <p>MY →</p>
-        </div>
-        <div class="fade-bottom"></div>
-      </div>
-      <div class="panel">
-        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=600&fit=crop" alt="">
-        <div class="content">
-          <h2>ASSAM 7</h2>
-          <p>Location →</p>
-        </div>
-        <div class="fade-bottom"></div>
-      </div>
-      <div class="panel">
-        <img src="assets/gallery/assam/Sivasagar-Assam.jpg" alt="">
-        <div class="content">
-          <h2>Sivasagar</h2>
-          <p><a href="cards.html">Read More→</a></p>
-        </div>
-        <div class="fade-bottom"></div>
-      </div>
-      <div class="panel">
-        <img src="assets/gallery/assam/assam-2.avif" alt="">
-        <div class="content">
-          <h2>Majuli Island</h2>
-          <p><a href="cards.html">Read More→</a></p>
-        </div>
-        <div class="fade-bottom"></div>
+      
+      <div class="header">
       </div>
     </div>
-  </div>
+  </section>
+  
+  <section>
+    <div class="header1">
+      <h2>Gallery</h2>
+    </div>
+    
+    <div class="scroll-container">
+      <div class="container auto-scrolling" id="container">
+        <div class="panel">
+          <img src="assets/gallery/meghalya/meghalya-1.jpg" alt="">
+          <div class="content">
+            <h2>Garden of Caves</h2>
+            <p><a href="cards.html">Read More→</a></p>
+          </div>
+          <div class="fade-bottom"></div>
+        </div>
+        <div class="panel">
+          <img src="assets/gallery/meghalya/cherrapunji.jpg" alt="">
+          <div class="content">
+            <h2>Cherrapunji</h2>
+            <p><a href="cards.html">Read More→</a></p>
+          </div>
+          <div class="fade-bottom"></div>
+        </div>
+        <div class="panel">
+          <img src="assets/gallery/meghalya/meghalya-3.jpeg" alt="">
+          <div class="content">
+            <h2>Mawlynnong</h2>
+            <p><a href="cards.html">Read More→</a></p>
+          </div>
+          <div class="fade-bottom"></div>
+        </div>
+        <div class="panel">
+          <img src="assets/gallery/meghalya/meghalya-4.jpg"alt="">
+          <div class="content">
+            <h2>Balpakram National Park</h2>
+            <p><a href="cards.html">Read More→</a></p>
+          </div>
+          <div class="fade-bottom"></div>
+        </div>
+        <div class="panel">
+          <img src="assets/gallery/meghalya/meghalya-51.jpg" alt="">
+          <div class="content">
+            <h2>Mawkdok Dympep Valley</h2>
+            <p><a href="cards.html">Read More→</a></p>
+          </div>
+          <div class="fade-bottom"></div>
+        </div>
+        <div class="panel">
+          <img src="assets/gallery/meghalya/meghalya-5.webp" alt="">
+          <div class="content">
+            <h2>Umiam Lake</h2>
+            <p><a href="cards.html">Read More→</a></p>
+          </div>
+          <div class="fade-bottom"></div>
+        </div>
+        <div class="panel">
+          <img src="assets/gallery/meghalya/meghalya-7.avif" alt="">
+          <div class="content">
+            <h2>Chakzam Bridge</h2>
+            <p><a href="cards.html">Read More→</a></p>
+          </div>
+          <div class="fade-bottom"></div>
+        </div>
+         <div class="panel">
+          <img src="assets/gallery/meghalya/meghalya-1.jpg" alt="">
+          <div class="content">
+            <h2>Garden of Caves</h2>
+            <p><a href="cards.html">Read More→</a></p>
+          </div>
+          <div class="fade-bottom"></div>
+        </div>
+        <div class="panel">
+          <img src="assets/gallery/meghalya/cherrapunji.jpg" alt="">
+          <div class="content">
+            <h2>Cherrapunji</h2>
+            <p><a href="cards.html">Read More→</a></p>
+          </div>
+          <div class="fade-bottom"></div>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- Play/Pause Controls -->
   <div class="play-controls">
@@ -434,11 +607,21 @@
     const playIcon = document.getElementById('playIcon');
     const pauseIcon = document.getElementById('pauseIcon');
     const scrollProgress = document.getElementById('scrollProgress');
+    const header = document.querySelector('.header');
 
     let currentTransform = 0;
     let isAutoScrolling = true;
     let panelWidth = 290; // 250px width + 40px margin
     let maxScroll = 0;
+
+    // Header scroll effect
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 100) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
 
     // Calculate max scroll distance
     function calculateMaxScroll() {

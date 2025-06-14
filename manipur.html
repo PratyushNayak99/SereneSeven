@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Wild Planet – Assam</title>
+    <title>Wild Planet – Manipur</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -33,6 +34,7 @@
             text-align: center;
             padding: 20px;
             overflow: hidden;
+            perspective: 1000px;
         }
 
         /* Background Image */
@@ -46,6 +48,8 @@
             background: invert(1);
             filter: blur(2px);
             z-index: 0;
+            transform-origin: center center;
+            will-change: transform;
         }
 
         /* Side Overlay Dark Gradient */
@@ -109,6 +113,7 @@
             display: flex;
             gap: 10px;
             align-items: center;
+            cursor: pointer;
         }
 
         .navbar .right a {
@@ -116,6 +121,124 @@
             color: white;
             text-decoration: none;
             font-weight: bold;
+        }
+
+        .navbar .right i {
+            font-size: large;
+        }
+
+        /* Burger Menu Styles */
+        .burger-menu {
+            position: absolute;
+            top: 65px;
+            left: 30px;
+            min-width: 250px;
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.1), 
+                rgba(255, 255, 255, 0.05)
+            );
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 0;
+            display: none;
+            flex-direction: column;
+            z-index: 1000;
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            overflow: hidden;
+            transform: translateY(-10px);
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .burger-menu.active {
+            display: flex;
+            transform: translateY(0);
+            opacity: 1;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-10px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .burger-menu::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255, 255, 255, 0.3), 
+                transparent
+            );
+        }
+
+        .burger-menu a {
+            color: white;
+            padding: 16px 20px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            position: relative;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .burger-menu a:last-child {
+            border-bottom: none;
+        }
+
+        .burger-menu a:hover {
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.15), 
+                rgba(255, 255, 255, 0.08)
+            );
+            color: #fff;
+            padding-left: 25px;
+            transform: translateX(5px);
+            box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.1);
+        }
+
+        .burger-menu a::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(180deg, #4ade80, #06b6d4);
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
+        }
+
+        .burger-menu a:hover::before {
+            transform: scaleY(1);
+        }
+
+        /* Menu icon animation */
+        .menu-icon {
+            font-size: 18px;
+            margin-right: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .menu-icon.active {
+            transform: rotate(90deg);
         }
 
         /* Main Content */
@@ -170,7 +293,6 @@
         }
 
         .cta {
-            margin-top: 30px;
             padding: 12px 35px;
             border: 2px solid white;
             background: transparent;
@@ -182,7 +304,7 @@
             transition: all 0.3s ease;
             z-index: 3;
             position: relative;
-            top: 240px;
+            top: 160px;
         }
 
         .cta:hover {
@@ -198,6 +320,8 @@
             max-height: 145vh;
             z-index: 2;
             pointer-events: none;
+            transform-origin: center bottom;
+            will-change: transform;
         }
 
         /* Arrows Navigation */
@@ -226,12 +350,6 @@
             right: 30px;
         }
 
-        /* Menu icon */
-        .menu-icon {
-            font-size: 18px;
-            margin-right: 8px;
-        }
-
         /* Scroll Indicator */
         .scroll-indicator {
             position: absolute;
@@ -244,40 +362,20 @@
         }
 
         @keyframes bounce {
-
-            0%,
-            20%,
-            50%,
-            80%,
-            100% {
+            0%, 20%, 50%, 80%, 100% {
                 transform: translateX(-50%) translateY(0);
             }
-
             40% {
                 transform: translateX(-50%) translateY(-10px);
             }
-
             60% {
                 transform: translateX(-50%) translateY(-5px);
             }
         }
 
-        .hero {
-            perspective: 1000px;
-            /* Creates 3D space for zoom effect */
-        }
-
-        .background-blur {
-            transform-origin: center center;
-            /* Zoom from the center */
-            will-change: transform;
-            /* Optimizes for animation */
-        }
-
-        .foreground {
-            transform-origin: center bottom;
-            /* Zoom from the bottom */
-            will-change: transform;
+        a {
+            text-decoration: none;
+            color: white;
         }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
@@ -293,21 +391,32 @@
         <!-- Navigation -->
         <header class="navbar">
             <div class="left">
-                <span class="menu-icon">☰</span> WHERE TO WATCH
+                <span class="menu-icon" id="menu-toggle">☰</span> NAVIGATION
             </div>
             <div class="right">
-                <a href="#">f</a>
-                <a href="#">yt</a>
-                <a href="#">tw</a>
-                <a href="#">ig</a>
+                <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="https://youtube.com" target="_blank"><i class="fab fa-youtube"></i></a>
+                <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
             </div>
         </header>
 
-        <!-- Main Title (ASSAM) -->
+        <!-- Burger Menu -->
+        <nav class="burger-menu" id="burger-menu">
+            <a href="assam.html">Assam</a>
+  <a href="arunachal.html">Arunachal Pradesh</a>
+  <a href="manipur.html">Manipur</a>
+  <a href="meghalya.html">Meghalaya</a>
+  <a href="mizoram.html">Mizoram</a>
+  <a href="nagaland.html">Nagaland</a>
+  <a href="tripura.html">Tripura</a>
+        </nav>
+
+        <!-- Main Title -->
         <h1 class="title-behind">MANIPUR</h1>
 
-        <!-- Kaziranga Title (Initially Hidden) -->
-        <h4 class="title-kaziranga">Dzukou Valley</h4>
+        <!-- Dzukou Valley Title (Initially Hidden) -->
+        <h4 class="title-kaziranga">Sanamahi Temple2</h4>
 
         <!-- Content -->
         <div class="content">
@@ -315,25 +424,27 @@
 
             <div class="description-container">
                 <p class="description-original">
-                    The coldest, windiest, most hostile continent. Only the toughest can survive here.
+                    The most jeweled, dance-blessed, floating paradise where celestial
+            Gandharvas reign and rare orchids bloom.
                 </p>
                 <p class="description-new">
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nam et esse non maiores quas iste
-                    repellendus provident iure eius laboriosam magni velit ipsa dolor nisi facilis odit tenetur, placeat
-                    omnis totam enim doloremque asperiores. Sapiente blanditiis asperiores illo iste omnis.
-                    Exercitationem reprehenderit quia nobis magni reiciendis, fugit qui harum sint?
-                </p>
-                <button class="cta">WATCH TRAILER</button>
+                    the supreme
+            deity of Sanamahism, is located near Kangla Palace in Imphal West,
+            Manipur. One of Asia's oldest temples, it was reconstructed in 1891
+            during King Kulachandra's reign. The temple features Gothic-style
+            architecture with an octagonal base and serves as a major pilgrimage
+            site for Meitei devotees.
+                
             </div>
         </div>
+        <button class="cta"><a href="gallerymanipur.html">SEE MORE</a></button>
 
         <!-- Foreground Image -->
-        <img src="assets/monumentman.png" alt="Penguins" class="foreground" />
+        <img src="assets/monumentman.png" alt="Monument" class="foreground" />
 
         <!-- Navigation Arrows -->
         <a href="tripura.html" class="arrow left">← TRIPURA</a>
         <a href="nagaland.html" class="arrow right">NAGALAND →</a>
-
 
         <!-- Scroll Indicator -->
         <div class="scroll-indicator">
@@ -346,6 +457,24 @@
     <script>
         // Register ScrollTrigger plugin
         gsap.registerPlugin(ScrollTrigger);
+
+        // Burger Menu Functionality
+        const toggleBtn = document.getElementById('menu-toggle');
+        const burgerMenu = document.getElementById('burger-menu');
+
+        toggleBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            burgerMenu.classList.toggle('active');
+            toggleBtn.classList.toggle('active');
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!burgerMenu.contains(e.target) && !toggleBtn.contains(e.target)) {
+                burgerMenu.classList.remove('active');
+                toggleBtn.classList.remove('active');
+            }
+        });
 
         // Initial animations
         gsap.from(".foreground", {
@@ -362,49 +491,36 @@
             delay: 0.5
         });
 
-
-
-
         gsap.set(".foreground", {
-            x: "-50%", // Start from center-left position
+            x: "-50%",
             y: "140px"
         });
-
-        // Scroll-triggered animations
-        // Scroll-triggered animations
-        // Store original positions and styles
-        const originalStyles = {
-            titleBehind: {
-                fontSize: window.getComputedStyle(document.querySelector('.title-behind')).fontSize,
-                opacity: 1,
-                transform: window.getComputedStyle(document.querySelector('.title-behind')).transform
-            },
-            // Add other elements if needed
-        };
 
         // Scroll-triggered animations
         ScrollTrigger.create({
             trigger: "body",
             start: "top top",
             end: "bottom bottom",
-            scrub: true, // Changed to true for smoother scrubbing
+            scrub: true,
             onUpdate: (self) => {
                 const progress = self.progress;
-                const zoomIntensity = 0.5; // Adjust this value for stronger/weaker zoom
+                const zoomIntensity = 0.5;
                 const scaleValue = 1 + (progress * zoomIntensity);
 
-                // Animate ASSAM title with proper reset capability
+                // Animate MANIPUR title
                 gsap.to(".title-behind", {
                     fontSize: `${80 - (120 * progress)}px`,
                     opacity: 1 - progress,
                     ease: "power2.out",
-                    overwrite: "auto" // Ensures proper overwriting of animations
+                    overwrite: "auto"
                 });
+
                 gsap.to(".background-blur", {
                     scale: scaleValue,
                     ease: "power2.out",
                     overwrite: "auto"
                 });
+
                 // Fade out original description
                 gsap.to(".description-original", {
                     opacity: 1 - progress,
@@ -412,7 +528,7 @@
                     overwrite: "auto"
                 });
 
-                // Fade in Kaziranga title
+                // Fade in Dzukou Valley title
                 gsap.to(".title-kaziranga", {
                     opacity: progress,
                     ease: "power2.out",
@@ -436,14 +552,12 @@
 
                 gsap.to(".foreground", {
                     scale: scaleValue,
-                    y: `${300 * progress}px`, // Moves right
+                    y: `${300 * progress}px`,
                     ease: "power2.out",
                     overwrite: "auto"
                 });
             }
         });
-
-
     </script>
 </body>
 
